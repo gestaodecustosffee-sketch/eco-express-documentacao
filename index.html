@@ -627,122 +627,126 @@ window.ecoCurrentUserData = window.currentUserProfile; // alternativa</code></pr
 </section>
 
 <section id="origem-dados">
-<h2>10. Origem dos Dados por Aba</h2>
+<h2>10. Origem dos Dados e Links das Fontes</h2>
+
+<h3>📋 Resumo Rápido das Fontes</h3>
+
+<ul>
+<li><strong>Ofensores PCML/Scorecard:</strong> Google Sheets DB_OFENSORES (Google Visualization API / JSONP).</li>
+<li><strong>Checklist Quinzenal/Anual/Treinamentos:</strong> Google Sheets interno (mesma planilha base, abas diferentes via GID).</li>
+<li><strong>Torre (Online, Offline, Scorecard, PCML):</strong> Google Sheets interno dedicado (Google Visualization API / JSONP).</li>
+<li><strong>Tempo Real (SCORECARD_GEOTAB):</strong> Google Sheets interno (mesma planilha da Torre, aba diferente).</li>
+<li><strong>VOU PARA LÁ:</strong> Google Sheets "vou para la", base pesada (~69MB), usa cache local como fallback.</li>
+<li><strong>KPIS BSC / PLANO DE AÇÃO:</strong> Google Sheets interno (Google Visualization API / JSONP).</li>
+<li><strong>Academia Dispatchers:</strong> Google Sheets "academia disp" (JSONP).</li>
+<li><strong>Consolidado de Acesso / Material / Treinamentos ECO:</strong> Google Sheets interno compartilhado (mesma planilha, GIDs diferentes).</li>
+<li><strong>Auditoria (Pilares, Treinamentos, Sem Parar, Serra, Investigação, Relatos, Multas):</strong> Origem não identificada no código atual (auditada via painel externo).</li>
+<li><strong>Power BI (5 botões):</strong> Relatórios públicos do Power BI (app.powerbi.com), incorporados via iframe.</li>
+<li><strong>Portais Externos (9 botões):</strong> Dados fora da Eco Express 360°. Acesso via link/iframe/nova guia.</li>
+<li><strong>Admin / Permissões / Status / Perfil:</strong> Firestore + Cloud Functions (rotas /api/admin/*).</li>
+</ul>
 
 <h3>🚛 FROTA</h3>
 
 <table>
-<tr><th>Aba/Módulo</th><th>Origem dos dados</th><th>Arquivo/Função</th><th>API/Endpoint</th><th>Firestore/BigQuery</th><th>Atualização</th><th>Observações</th></tr>
-<tr><td>CHECKLIST QUINZENAL</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>CHECKLIST ANUAL</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>OFENSORES PCML</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>OFENSORES SCORECARD</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TORRE OFFLINE</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TORRE SCORECARD</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TORRE PCML</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem</th><th>Link/Fonte</th><th>ID/Aba/Range</th><th>Arquivo/Função</th><th>Observação</th></tr>
+<tr><td>FROTA</td><td>CHECKLIST QUINZENAL</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>SHEET_ID <code>1OzrdPS7...</code> / GID_CHECKLIST <code>1226817368</code></td><td><code>oficial.html</code> — loadChecklist()</td><td>JSONP via Google Visualization API</td></tr>
+<tr><td>FROTA</td><td>CHECKLIST ANUAL</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>Mesma SHEET_ID, GID_CHECKLIST <code>1226817368</code></td><td><code>oficial.html</code> — loadChecklistAnual()</td><td>JSONP</td></tr>
+<tr><td>FROTA</td><td>OFENSORES PCML / OFENSORES SCORECARD</td><td>Google Sheets DB_OFENSORES</td><td>Link não publicado por segurança</td><td>SHEET_ID_OFENSORES <code>1q0G9L8Tu...</code> / SHEET_NAME_OFENSORES <code>DB_OFENSORES</code></td><td><code>oficial.html</code> — loadOfensores()</td><td>JSONP. Erro tratado por renderOfensoresError() sem alert/popup.</td></tr>
+<tr><td>FROTA</td><td>TREINAMENTOS ECO</td><td>Google Sheets "Consolidado treinamentos"</td><td>Link não publicado por segurança</td><td>SHEET_ID <code>1OzrdPS7...</code> / SHEET_NAME_TREINO <code>Consolidado treinamentos</code> / TREINAMENTO_GID <code>1214710884</code></td><td><code>oficial.html</code> — loadTreinamentos()</td><td>JSONP. Mesmo SHEET_ID da Checklist.</td></tr>
+<tr><td>FROTA</td><td>TORRE SCORECARD</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>SHEET_ID_TORRE <code>19YI9vF...</code> / GID_TORRE <code>1634458402</code> / range A:K</td><td><code>oficial.html</code> — loadTorre()</td><td>JSONP</td></tr>
+<tr><td>FROTA</td><td>TORRE PCML</td><td>Google Sheets interno (mesma planilha da Torre)</td><td>Link não publicado por segurança</td><td>Mesma SHEET_ID_TORRE / range A:K</td><td><code>oficial.html</code> — loadTorre()</td><td>JSONP. Mesma fonte da Torre.</td></tr>
+<tr><td>FROTA</td><td>TORRE OFFLINE</td><td>Google Sheets "TELEMETRIA_OFFLINE"</td><td>Link não publicado por segurança</td><td>SHEET_ID_TORRE <code>19YI9vF...</code> / GID_OFFLINE <code>1300163880</code> / SHEET_NAME_OFFLINE <code>TELEMETRIA_OFFLINE</code> / range A:Z</td><td><code>oficial.html</code> — loadOffline()</td><td>JSONP. Inclui status ECO.</td></tr>
+<tr><td>FROTA</td><td>TEMPO REAL (SCORECARD_GEOTAB)</td><td>Google Sheets "SCORECARD_GEOTAB"</td><td>Link não publicado por segurança</td><td>SHEET_ID_TEMPO_REAL <code>19YI9vF...</code> / SHEET_NAME_TEMPO_REAL <code>SCORECARD_GEOTAB</code></td><td><code>oficial.html</code> — loadTempoReal()</td><td>JSONP. Erro tratado inline sem alert.</td></tr>
 </table>
 
 <h3>🌐 PORTAL</h3>
 
 <table>
-<tr><th>Aba/Módulo</th><th>Origem dos dados</th><th>Arquivo/Função</th><th>API/Endpoint</th><th>Firestore/BigQuery</th><th>Atualização</th><th>Observações</th></tr>
-<tr><td>PORTAL MOTORISTAS</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>PORTAL DISPONIBILIDADE</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>RECRUTA ECO</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>EXTRATO ECO</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>VEC FLEET</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>SILOS MELI</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Abre em nova guia</td></tr>
-<tr><td>GEOTAB</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Abre em nova guia</td></tr>
-<tr><td>SEM PARAR</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Abre em nova guia (CSP)</td></tr>
-<tr><td>LITROZ</td><td>Dados carregados diretamente no portal externo. A plataforma Eco Express 360° apenas abre o acesso.</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Abre em nova guia (CSP)</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem</th><th>Link/Fonte</th><th>ID/Aba/Range</th><th>Arquivo/Função</th><th>Observação</th></tr>
+<tr><td>PORTAL</td><td>PORTAL MOTORISTAS</td><td>Portal externo (dados fora da Eco Express 360°)</td><td><code>https://portal.ecoexpress.com.br/portal</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe via ecoAbrirPortalSeguro().</td></tr>
+<tr><td>PORTAL</td><td>PORTAL DISPONIBILIDADE</td><td>Portal externo</td><td><code>https://disponibilidade.ecoexpress.com.br</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe.</td></tr>
+<tr><td>PORTAL</td><td>RECRUTA ECO</td><td>Portal externo</td><td><code>https://recruta.ecoexpress.com.br</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe.</td></tr>
+<tr><td>PORTAL</td><td>EXTRATO ECO</td><td>Portal externo</td><td><code>https://financeiro.ecoexpress.com.br</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe.</td></tr>
+<tr><td>PORTAL</td><td>VEC FLEET</td><td>Portal externo</td><td><code>https://meli-br.vecfleet.io/personas</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe.</td></tr>
+<tr><td>PORTAL</td><td>SILOS MELI</td><td>Portal externo</td><td><code>https://envios.adminml.com/logistics/monitoring-distribution</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre em nova guia (window.open). Bloqueio de iframe por CSP/X-Frame-Options.</td></tr>
+<tr><td>PORTAL</td><td>GEOTAB</td><td>Portal externo</td><td><code>https://my.geotab.com/login.html</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre em nova guia (window.open). X-Frame-Options: sameorigin.</td></tr>
+<tr><td>PORTAL</td><td>SEM PARAR</td><td>Portal externo</td><td><code>https://www.sempararempresas.com.br/login</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre em nova guia (window.open). CSP frame-ancestors bloqueia iframe.</td></tr>
+<tr><td>PORTAL</td><td>LITROZ</td><td>Portal externo (Keycloak)</td><td><code>https://auth.litroz.com/realms/litroz-client/...</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre em nova guia (window.open). CSP frame-ancestors: self bloqueia iframe.</td></tr>
 </table>
 
 <h3>🗂️ BACKOFFICE</h3>
 
 <table>
-<tr><th>Aba/Módulo</th><th>Origem dos dados</th><th>Arquivo/Função</th><th>API/Endpoint</th><th>Firestore/BigQuery</th><th>Atualização</th><th>Observações</th></tr>
-<tr><td>CONSOLIDADO DE ACESSO</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>MATERIAL</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TREINAMENTOS ECO</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TEMPLATES PRONTOS</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem</th><th>Link/Fonte</th><th>ID/Aba/Range</th><th>Arquivo/Função</th><th>Observação</th></tr>
+<tr><td>BACKOFFICE</td><td>CONSOLIDADO DE ACESSO</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>ECO_ACADEMIC_SHEET_ID <code>1BM8fc0f...</code> / GID <code>0</code></td><td><code>oficial.html</code> — loadEcoAcademic()</td><td>JSONP. Erro tratado inline sem alert.</td></tr>
+<tr><td>BACKOFFICE</td><td>MATERIAL</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>MATERIAL_TREINAMENTOS_SHEET_ID <code>1BM8fc0f...</code> / GID <code>2071176239</code></td><td><code>oficial.html</code> — loadMaterialTreinamentos()</td><td>JSONP. Erro tratado inline sem alert.</td></tr>
+<tr><td>BACKOFFICE</td><td>TREINAMENTOS ECO</td><td>Google Sheets "Treinamentos"</td><td>Link não publicado por segurança</td><td>BACKOFFICE_TREINAMENTOS_SHEET_ID <code>1BM8fc0f...</code> / SHEET_NAME <code>Treinamentos</code></td><td><code>oficial.html</code> — loadBackofficeTreinamentos()</td><td>JSONP. Erro tratado inline sem alert.</td></tr>
+<tr><td>BACKOFFICE</td><td>TEMPLATES PRONTOS</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Aguardando investigação</td></tr>
 </table>
 
 <h3>🛡️ AUDITORIA</h3>
 
 <table>
-<tr><th>Aba/Módulo</th><th>Origem dos dados</th><th>Arquivo/Função</th><th>API/Endpoint</th><th>Firestore/BigQuery</th><th>Atualização</th><th>Observações</th></tr>
-<tr><td>PILARES</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>TREINAMENTOS ECOEXPRESS</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>SEM PARAR (Auditoria)</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>SERRA</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>INVESTIGAÇÃO DE ACIDENTE</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>RELATOS VEC FLEET</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>MULTAS</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem</th><th>Link/Fonte</th><th>ID/Aba/Range</th><th>Arquivo/Função</th><th>Observação</th></tr>
+<tr><td>AUDITORIA</td><td>PILARES</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Possui link para "Painel da Auditoria" no Google Sites via ecoAbrirPortalSeguro</td></tr>
+<tr><td>AUDITORIA</td><td>TREINAMENTOS ECOEXPRESS</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Aguardando investigação</td></tr>
+<tr><td>AUDITORIA</td><td>SEM PARAR (Auditoria)</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Aguardando investigação</td></tr>
+<tr><td>AUDITORIA</td><td>SERRA</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Aguardando investigação</td></tr>
+<tr><td>AUDITORIA</td><td>INVESTIGAÇÃO DE ACIDENTE</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Botão criado dinamicamente via JS</td></tr>
+<tr><td>AUDITORIA</td><td>RELATOS VEC FLEET</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Botão criado dinamicamente via JS</td></tr>
+<tr><td>AUDITORIA</td><td>MULTAS</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Botão criado dinamicamente via JS</td></tr>
+<tr><td>AUDITORIA</td><td>PAINEL DA AUDITORIA (link)</td><td>Google Sites externo</td><td><code>https://sites.google.com/view/paineldeauditoriaecoexpress/painel</code></td><td>—</td><td><code>oficial.html</code></td><td>Abre dentro do iframe via ecoAbrirPortalSeguro</td></tr>
 </table>
 
 <h3>📊 INDICADORES DE PERFORMANCE</h3>
 
 <table>
-<tr><th>Aba/Módulo</th><th>Origem dos dados</th><th>Arquivo/Função</th><th>API/Endpoint</th><th>Firestore/BigQuery</th><th>Atualização</th><th>Observações</th></tr>
-<tr><td>KPIS BSC</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>PLANO DE AÇÃO</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>DS POWER BI</td><td>Dados tratados e exibidos pelo relatório público do Power BI. A plataforma apenas incorpora o relatório via iframe.</td><td><code>oficial.html</code></td><td><code>app.powerbi.com/view?r=...</code></td><td>—</td><td>Tempo real (Power BI)</td><td>—</td></tr>
-<tr><td>TELEMETRIA POWER BI</td><td>Dados tratados e exibidos pelo relatório público do Power BI. A plataforma apenas incorpora o relatório via iframe.</td><td><code>oficial.html</code></td><td><code>app.powerbi.com/view?r=...</code></td><td>—</td><td>Tempo real (Power BI)</td><td>—</td></tr>
-<tr><td>VOU PARA LÁ POWER BI</td><td>Dados tratados e exibidos pelo relatório público do Power BI. A plataforma apenas incorpora o relatório via iframe.</td><td><code>oficial.html</code></td><td><code>app.powerbi.com/view?r=...</code></td><td>—</td><td>Tempo real (Power BI)</td><td>—</td></tr>
-<tr><td>DISPONIBILIDADE FROTA POWER BI</td><td>Dados tratados e exibidos pelo relatório público do Power BI. A plataforma apenas incorpora o relatório via iframe.</td><td><code>oficial.html</code></td><td><code>app.powerbi.com/view?r=...</code></td><td>—</td><td>Tempo real (Power BI)</td><td>—</td></tr>
-<tr><td>MONITORAMENTO DA ROTA POWER BI</td><td>Dados tratados e exibidos pelo relatório público do Power BI. A plataforma apenas incorpora o relatório via iframe.</td><td><code>oficial.html</code></td><td><code>app.powerbi.com/view?r=...</code></td><td>—</td><td>Tempo real (Power BI)</td><td>—</td></tr>
-<tr><td>TREINAMENTOS DRIVERS</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
-<tr><td>ACADEMIA DE DISPATCHERS</td><td>Origem dos dados não identificada no código atual</td><td><code>oficial.html</code></td><td>—</td><td>—</td><td>—</td><td>Aguardando investigação</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem</th><th>Link/Fonte</th><th>ID/Aba/Range</th><th>Arquivo/Função</th><th>Observação</th></tr>
+<tr><td>INDICADORES</td><td>KPIS BSC (Plano de Ação)</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>PA_SHEET_ID <code>173ntSNf...</code> / SHEET_NAME <code>PLANO DE AÇÃO</code></td><td><code>oficial.html</code> — loadPlanoAcao()</td><td>JSONP</td></tr>
+<tr><td>INDICADORES</td><td>KPIS BSC (Last Mile KPIs)</td><td>Google Sheets interno</td><td>Link não publicado por segurança</td><td>LM_KPI_SHEET_ID <code>12vNKMaN...</code> / LM_KPI_BASE_GID <code>772215936</code> / range A:N</td><td><code>oficial.html</code> — loadLmKpiSheet()</td><td>JSONP. Base pesada.</td></tr>
+<tr><td>INDICADORES</td><td>PLANO DE AÇÃO</td><td>Google Sheets "PLANO DE AÇÃO"</td><td>Link não publicado por segurança</td><td>PA_SHEET_ID <code>173ntSNf...</code> / SHEET_NAME <code>PLANO DE AÇÃO</code></td><td><code>oficial.html</code> — loadPlanoAcao()</td><td>JSONP</td></tr>
+<tr><td>INDICADORES</td><td>VOU PARA LÁ</td><td>Google Sheets "vou para la"</td><td>Link não publicado por segurança</td><td>SHEET_ID <code>1OzrdPS7...</code> / GID <code>1884341367</code> / range A:AZ</td><td><code>oficial.html</code> — loadVouParaLa()</td><td>JSONP. Base ~69MB. Timeout 35s. Cache local (localStorage) como fallback. Recomendação: migrar para BigQuery/Cloud Function.</td></tr>
+<tr><td>INDICADORES</td><td>DS POWER BI</td><td>Power BI público</td><td><code>app.powerbi.com/view?r=eyJrIjoiYTY1MDIxYWMtYmY0Zi00MDA3LWE3MGYtNjM0ZWZkYzJmZjY0IiwidCI6ImM2NmU2MWI5LWVkOGUtNDhiNi05YzlkLTM5ZTNkMTc1MDNkNyJ9</code></td><td>—</td><td><code>oficial.html</code> — botões com id dsPowerBIButton</td><td>Abre dentro do iframe via ecoAbrirPortalSeguro. Barra HOME visível.</td></tr>
+<tr><td>INDICADORES</td><td>TELEMETRIA POWER BI</td><td>Power BI público</td><td><code>app.powerbi.com/view?r=eyJrIjoiZDYwYjdiMjgtOTc0ZS00NjlhLTk1OGMtZDRhYjg5MWE3N2NhIiwidCI6ImM2NmU2MWI5LWVkOGUtNDhiNi05YzlkLTM5ZTNkMTc1MDNkNyJ9</code></td><td>—</td><td><code>oficial.html</code> — botões com id telemetriaButton</td><td>Abre dentro do iframe.</td></tr>
+<tr><td>INDICADORES</td><td>VOU PARA LÁ POWER BI</td><td>Power BI público</td><td><code>app.powerbi.com/view?r=eyJrIjoiZDA4ZGRhMjktNWZiYi00ZGFjLTg5YjUtNzcxNzFhYWM2NjAwIiwidCI6ImM2NmU2MWI5LWVkOGUtNDhiNi05YzlkLTM5ZTNkMTc1MDNkNyJ9</code></td><td>—</td><td><code>oficial.html</code> — botões com id vouParaLaButton</td><td>Abre dentro do iframe.</td></tr>
+<tr><td>INDICADORES</td><td>DISPONIBILIDADE FROTA POWER BI</td><td>Power BI público</td><td><code>app.powerbi.com/view?r=eyJrIjoiZmFlYWM0ZWEtMTQ5Ny00MjIxLTkyZGUtOWJkOTlmMDBmNjM2IiwidCI6ImM2NmU2MWI5LWVkOGUtNDhiNi05YzlkLTM5ZTNkMTc1MDNkNyJ9</code></td><td>—</td><td><code>oficial.html</code> — botões com id disponibilidadeButton</td><td>Abre dentro do iframe.</td></tr>
+<tr><td>INDICADORES</td><td>MONITORAMENTO DA ROTA POWER BI</td><td>Power BI público</td><td><code>app.powerbi.com/view?r=eyJrIjoiZDYwM2MxNWUtMjU2My00N2JmLThkYjAtODBjYzhmZTJiMTEyIiwidCI6ImM2NmU2MWI5LWVkOGUtNDhiNi05YzlkLTM5ZTNkMTc1MDNkNyJ9</code></td><td>—</td><td><code>oficial.html</code> — botões com id monitoramentoButton</td><td>Abre dentro do iframe.</td></tr>
+<tr><td>INDICADORES</td><td>ACADEMIA DE DISPATCHERS</td><td>Google Sheets "academia disp"</td><td>Link não publicado por segurança</td><td>AC_SHEET_ID <code>1OzrdPS7...</code> / AC_GID <code>308875742</code> / AC_SHEET_NAME <code>academia disp</code></td><td><code>oficial.html</code> — loadAcademia()</td><td>JSONP</td></tr>
+<tr><td>INDICADORES</td><td>TREINAMENTOS DRIVERS</td><td>Origem dos dados não identificada no código atual</td><td>—</td><td>—</td><td><code>oficial.html</code></td><td>Aguardando investigação</td></tr>
 </table>
 
 <div class="callout warn">
-<strong>⚠️ Observação:</strong> A origem específica dos dados das abas internas (FROTA, BACKOFFICE, AUDITORIA, INDICADORES) não foi identificada claramente no código atual. A documentação foi preenchida com base na estrutura visível do dashboard, mas a integração com BigQuery/Firestore interna precisa de uma investigação mais profunda.
+<strong>⚠️ Observação:</strong> Algumas abas (TEMPLATES PRONTOS, toda a aba AUDITORIA exceto o link do Painel, e TREINAMENTOS DRIVERS) ficaram com "Origem dos dados não identificada no código atual". A investigação específica dessas fontes pode ser feita em uma fase posterior. Não expus API keys, tokens ou credenciais. Apenas IDs de planilhas públicas do Google Sheets foram registrados.
 </div>
 </section>
 
 <section id="mapa-origem">
-<h2>11. Mapa de Origem dos Dados</h2>
+<h2>11. Mapa Rápido de Origem dos Dados</h2>
 
 <p>Visão executiva de onde cada aba/obtém informação:</p>
 
 <table>
-<tr><th>Aba</th><th>Origem Resumida</th></tr>
-<tr><td>CHECKLIST QUINZENAL</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>CHECKLIST ANUAL</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>OFENSORES PCML</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>OFENSORES SCORECARD</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TORRE OFFLINE</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TORRE SCORECARD</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TORRE PCML</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>CONSOLIDADO DE ACESSO</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>MATERIAL</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TREINAMENTOS ECO</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TEMPLATES PRONTOS</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>PILARES</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>TREINAMENTOS ECOEXPRESS</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>SEM PARAR (Auditoria)</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>SERRA</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>INVESTIGAÇÃO DE ACIDENTE</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>RELATOS VEC FLEET</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>MULTAS</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>KPIS BSC</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>PLANO DE AÇÃO</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>DS POWER BI</td><td>Power BI público incorporado via iframe</td></tr>
-<tr><td>TELEMETRIA POWER BI</td><td>Power BI público incorporado via iframe</td></tr>
-<tr><td>VOU PARA LÁ POWER BI</td><td>Power BI público incorporado via iframe</td></tr>
-<tr><td>DISPONIBILIDADE FROTA POWER BI</td><td>Power BI público incorporado via iframe</td></tr>
-<tr><td>MONITORAMENTO DA ROTA POWER BI</td><td>Power BI público incorporado via iframe</td></tr>
-<tr><td>TREINAMENTOS DRIVERS</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>ACADEMIA DE DISPATCHERS</td><td>Origem não identificada no código atual</td></tr>
-<tr><td>PORTAL MOTORISTAS</td><td>Portal externo aberto em iframe</td></tr>
-<tr><td>PORTAL DISPONIBILIDADE</td><td>Portal externo aberto em iframe</td></tr>
-<tr><td>RECRUTA ECO</td><td>Portal externo aberto em iframe</td></tr>
-<tr><td>EXTRATO ECO</td><td>Portal externo aberto em iframe</td></tr>
-<tr><td>VEC FLEET</td><td>Portal externo aberto em iframe</td></tr>
-<tr><td>SILOS MELI</td><td>Portal externo aberto em nova guia</td></tr>
-<tr><td>GEOTAB</td><td>Portal externo aberto em nova guia</td></tr>
-<tr><td>SEM PARAR</td><td>Portal externo aberto em nova guia (CSP frame-ancestors)</td></tr>
-<tr><td>LITROZ</td><td>Portal externo aberto em nova guia (CSP frame-ancestors: self)</td></tr>
+<tr><th>Grupo</th><th>Aba</th><th>Origem Resumida</th></tr>
+<tr><td>FROTA</td><td>CHECKLIST QUINZENAL</td><td>Google Sheets interno (JSONP)</td></tr>
+<tr><td>FROTA</td><td>CHECKLIST ANUAL</td><td>Google Sheets interno (mesma SHEET_ID, JSONP)</td></tr>
+<tr><td>FROTA</td><td>OFENSORES PCML / OFENSORES SCORECARD</td><td>Google Sheets DB_OFENSORES (JSONP)</td></tr>
+<tr><td>FROTA</td><td>TREINAMENTOS ECO</td><td>Google Sheets "Consolidado treinamentos" (JSONP)</td></tr>
+<tr><td>FROTA</td><td>TORRE SCORECARD / TORRE PCML</td><td>Google Sheets interno (SHEET_ID_TORRE, JSONP)</td></tr>
+<tr><td>FROTA</td><td>TORRE OFFLINE</td><td>Google Sheets "TELEMETRIA_OFFLINE" (JSONP)</td></tr>
+<tr><td>FROTA</td><td>TEMPO REAL (SCORECARD_GEOTAB)</td><td>Google Sheets interno (JSONP)</td></tr>
+<tr><td>PORTAL</td><td>PORTAL MOTORISTAS / DISPONIBILIDADE / RECRUTA / EXTRATO / VEC FLEET</td><td>Portal externo (iframe)</td></tr>
+<tr><td>PORTAL</td><td>SILOS MELI / GEOTAB / SEM PARAR / LITROZ</td><td>Portal externo (nova guia, CSP/X-Frame-Options)</td></tr>
+<tr><td>BACKOFFICE</td><td>CONSOLIDADO DE ACESSO / MATERIAL / TREINAMENTOS ECO</td><td>Google Sheets interno (JSONP)</td></tr>
+<tr><td>BACKOFFICE</td><td>TEMPLATES PRONTOS</td><td>Origem não identificada no código atual</td></tr>
+<tr><td>AUDITORIA</td><td>PILARES / TREINAMENTOS ECOEXPRESS / SEM PARAR / SERRA / INVESTIGAÇÃO / RELATOS / MULTAS</td><td>Origem não identificada no código atual</td></tr>
+<tr><td>AUDITORIA</td><td>PAINEL DA AUDITORIA (link)</td><td>Google Sites externo (iframe)</td></tr>
+<tr><td>INDICADORES</td><td>KPIS BSC</td><td>Google Sheets "PLANO DE AÇÃO" + Last Mile KPIs (JSONP)</td></tr>
+<tr><td>INDICADORES</td><td>PLANO DE AÇÃO</td><td>Google Sheets "PLANO DE AÇÃO" (JSONP)</td></tr>
+<tr><td>INDICADORES</td><td>VOU PARA LÁ</td><td>Google Sheets "vou para la" (~69MB, JSONP, cache local)</td></tr>
+<tr><td>INDICADORES</td><td>DS / TELEMETRIA / VOU PARA LÁ / DISPONIBILIDADE FROTA / MONITORAMENTO DA ROTA POWER BI</td><td>Power BI público (iframe)</td></tr>
+<tr><td>INDICADORES</td><td>ACADEMIA DE DISPATCHERS</td><td>Google Sheets "academia disp" (JSONP)</td></tr>
+<tr><td>INDICADORES</td><td>TREINAMENTOS DRIVERS</td><td>Origem não identificada no código atual</td></tr>
 </table>
 </section>
 
